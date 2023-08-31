@@ -7,6 +7,8 @@ from databricks.connect import DatabricksSession
 
 import streamlit as st
 
+
+
 @st.cache_resource(ttl='1d')
 def get_model(stage="production"):
     mlflow.set_registry_uri("databricks")
@@ -15,7 +17,19 @@ def get_model(stage="production"):
 
 @st.cache_resource(ttl='1h')
 def get_spark_session():
-    spark = DatabricksSession.builder.profile("DEFAULT").getOrCreate()
+    
+    # spark = DatabricksSession.builder.profile("DEFAULT").getOrCreate()
+
+    DATABRICKS_HOST = st.secrets['DATABRICKS_HOST']
+    DATABRICKS_TOKEN = st.secrets['DATABRICKS_TOKEN']
+    DATABRICKS_CLUSTER = st.secrets['DATABRICKS_CLUSTER']
+
+    spark = (DatabricksSession.builder
+                              .host(DATABRICKS_HOST)
+                              .token(DATABRICKS_TOKEN)
+                              .clusterId(DATABRICKS_CLUSTER)
+                              .getOrCreate())
+    
     return spark
 
 @st.cache_resource(ttl='1d')
