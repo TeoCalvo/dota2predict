@@ -84,9 +84,13 @@ def insert_teams_database_fs(df:pd.DataFrame):
 
     teams = ",".join([f"'{i}'" for i in df['idTeam']] )
     query = f"DELETE FROM dota_teams WHERE IdTeam IN ({teams});"
-    with con.connect() as connect:
-        connect.execute(statement=sqlalchemy.text(query))
-        connect.commit()
+    
+    try:
+        with con.connect() as connect:
+            connect.execute(statement=sqlalchemy.text(query))
+            connect.commit()
+    except:
+        print("Falha ao tentar deletar linhas")
 
     df['dtReference'] = dt_today
     df.to_sql("dota_teams", con=con, index=False, if_exists="append")
