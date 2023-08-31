@@ -1,0 +1,1 @@
+SELECT * FROM dota_teams;

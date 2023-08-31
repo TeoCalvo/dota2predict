@@ -1,0 +1,8 @@
+databricks_connect==13.2.1
+databricks_sdk==0.6.0
+feature-engine==1.6.1
+lightgbm==3.3.5
+mlflow==2.5.0
+pandas==2.0.3
+SQLAlchemy==2.0.20
+streamlit==1.26.0
