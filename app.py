@@ -26,9 +26,13 @@ dire_team_id = teams[teams['descTeamName']==dire_team_box]['idTeam'].iloc[0]
 
 team_ids = [radiant_team_id, dire_team_id]
 
-print("Buscando dados no database local...")
-fs_teams = utils.get_teams_database_fs(team_ids)
-print("ok.")
+try:
+    print("Buscando dados no database local...")
+    fs_teams = utils.get_teams_database_fs(team_ids)
+    print("ok.")
+
+except:
+   fs_teams = pd.DataFrame() 
 
 if fs_teams.shape[0] < 2:
     print("Coletando dados do Databricks...")
